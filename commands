@@ -1,0 +1,50 @@
+Command to create pod manifest: 
+kubectl run my-pod --image=nginx --dry-run=client -o yaml > my-pod.yaml
+Command to create  deployment manifest:
+kubectl create deployment my-deployment --image=nginx --dry-run=client -o yaml > my-deployment.yaml
+Command to create service manifest:
+kubectl create service nodeport my-service --tcp=80:80 --dry-run=client -o yaml > my-service.yaml
+Command to make node unavailable and rescheduling the pods:
+kubectl drain <node-name> --delete-local-data --ignore-daemonsets --force
+Command to label nodes in kubernetes: 
+kubectl label nodes <node-name> <key>=<value>
+
+## Advanced  commands: 
+
+kubectl get nodes -o=jsonpath='{.items[*].metadata.name}'
+
+k get pv --sort-by=.spec.capacity.storage 
+
+k get pv --sort-by=.spec.capacity.storage -o=custom-columns=Name:.metadata.name,CAPACITY:.spec.capacity.storage
+
+
+## New Commands: 
+
+kubectl get pods --field-selector status.phase=Running
+
+some example:
+metadata.name=my-service
+metadata.namespace!=default
+status.phase=Pending
+
+
+# In a namespace
+kubectl api-resources --namespaced=true
+
+# Not in a namespace
+kubectl api-resources --namespaced=false
+
+
+kubectl get pods --field-selector metadata.namespace=default
+
+kubectl get pods --field-selector spec.nodeName=controlplane
+
+
+alias k='kubectl'
+alias kgp='kubectl get pod'
+alias kgr='kubectl get rs'
+alias kgd='kubectl get deploy'
+alias kgs='kubectl get service'
+alias kdp='kubectl describe pod'
+alias kdd='kubectl describe deploy'
+alias kdr='kubectl describe rs'
